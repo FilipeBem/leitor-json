@@ -26,6 +26,47 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+public class ChoreServiceImplTest {
+    private ChoreRepository choreRepository = new ChoreRepositoryImpl();
+    private ChoreService choreService = new ChoreServiceImpl(choreRepository);
+    
+
+    @Test
+    public void testCreateChore() {
+        Chore chore = new Chore("Lavar a louça");
+        choreService.createChore(chore);
+        assertNotNull(chore.getId());
+    }
+
+    @Test
+    public void testFindChoreById() {
+        Chore chore = new Chore("Lavar a louça");
+        choreService.createChore(chore);
+        Chore foundChore = choreService.findChoreById(chore.getId());
+        assertEquals(chore, foundChore);
+    }
+
+    @Test
+    public void testUpdateChore() {
+        Chore chore = new Chore("Lavar a louça");
+        choreService.createChore(chore);
+        chore.setName("Passar a roupa");
+        choreService.updateChore(chore);
+        Chore updatedChore = choreService.findChoreById(chore.getId());
+        assertEquals(chore, updatedChore);
+    }
+
+    @Test
+    public void testDeleteChore() {
+        Chore chore = new Chore("Lavar a louça");
+        choreService.createChore(chore);
+        choreService.deleteChore(chore.getId());
+        Chore deletedChore = choreService.findChoreById(chore.getId());
+        assertNull(deletedChore)
+        }
+
+}
+
 public class FileChoreRepositoryTest {
 
     @InjectMocks
